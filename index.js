@@ -19,7 +19,7 @@ client.on("message", message =>
     else if (arguments[0] == "whatis")
     {
         var host = "https://en.wikipedia.org";
-        var path = "/w/api.php?action=opensearch&search={" + arguments.splice(1).join(" ") + "}&format=json";
+        var path = "/w/api.php?action=opensearch&search={" + arguments.splice(1).join("%20") + "}&format=json";
 
         http.request({ host: host, path: path }, function(result)
         {
