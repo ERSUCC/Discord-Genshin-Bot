@@ -5,7 +5,7 @@ const discord = require("discord.js");
 const {Translate} = require("@google-cloud/translate").v2;
 
 const client = new discord.Client();
-const translate = new Translate({ projectId: translateId, keyFilename: "google-auth.json" });
+const translate = new Translate({ projectId: translateId, keyFilename: "./google-auth.json" });
 
 console.log(translate);
 
