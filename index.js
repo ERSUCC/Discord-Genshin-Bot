@@ -30,6 +30,8 @@ client.on("message", message =>
 
         else
         {
+            console.log("we got this far!");
+
             var [translation] = translate.translate(arguments.slice(1), "en");
 
             translation = Array.isArray(translation) ? translation : [translation];
