@@ -9,16 +9,16 @@ client.on("message", message =>
 {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-    var arguments = message.content.substring(1).split(" ").map(x => x.toLowerCase().trim());
+    var msgArgs = message.content.substring(1).split(" ").map(x => x.toLowerCase().trim());
 
-    if (arguments[0] == "ping")
+    if (msgArgs[0] == "ping")
     {
         message.channel.send("pong");
     }
 
-    else if (arguments[0] == "whatis")
+    else if (msgArgs[0] == "whatis")
     {
-        var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + arguments.splice(1).join("%20") + "&format=json";
+        var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + msgArgs.splice(1).join("%20") + "&format=json";
 
         https.get(url, function(result)
         {
@@ -30,7 +30,7 @@ client.on("message", message =>
 
                 if (results.length == 0)
                 {
-                    message.channel.send("Could not find result for: " + arguments.splice(1).join(" "));
+                    message.channel.send("Could not find result for: " + msgArgs.splice(1).join(" "));
 
                     return;
                 }
@@ -39,11 +39,11 @@ client.on("message", message =>
 
                 var url2 = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&titles=" + searchTerm;
 
-                https.get(url2, function(result)
+                https.get(url2, function(result2)
                 {
-                    result.setEncoding("utf-8");
+                    result2.setEncoding("utf-8");
 
-                    result.on("data", (data) =>
+                    result2.on("data", (data) =>
                     {
                         var start = data.indexOf("extract\":\"") + 10;
                         var end = data.indexOf("}", start) - 1;
