@@ -10,7 +10,6 @@
   "author": "Isaac Brown",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/translate": "^6.0.5",
     "discord.js": "^12.5.1"
   }
 }
