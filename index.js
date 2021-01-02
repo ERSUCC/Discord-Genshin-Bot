@@ -5,9 +5,7 @@ const discord = require("discord.js");
 const {Translate} = require("@google-cloud/translate").v2;
 
 const client = new discord.Client();
-const translate = new Translate({ translateId });
-
-console.log(translate);
+const translate = new Translate({ projectId: translateId });
 
 client.on("message", message =>
 {
