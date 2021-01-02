@@ -41,7 +41,7 @@ client.on("message", message =>
     {
         Pokes.find({ username: message.author.username }, function(error, docs)
         {
-            console.log(error);
+            console.log(docs);
         });
     }
 
