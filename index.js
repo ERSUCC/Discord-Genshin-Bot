@@ -23,7 +23,12 @@ client.on("message", message =>
 
     else if (!message.author.bot)
     {
-        var [language] = translate.detect("bonjour");
+        translate.detect(message.content).then((results) =>
+        {
+            console.log(results);
+        });
+
+        /*var [language] = translate.detect("bonjour");
 
         language = Array.isArray(language) ? language : [language];
 
@@ -37,7 +42,7 @@ client.on("message", message =>
             {
                 message.channel.send(message.author.username + " said: " + translation[0]);
             }
-        }
+        }*/
     }
 });
 
