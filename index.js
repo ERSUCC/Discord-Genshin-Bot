@@ -4,6 +4,8 @@ const translateId = process.env.translateId;
 const discord = require("discord.js");
 const {Translate} = require("@google-cloud/translate").v2;
 
+console.log(Translate);
+
 const client = new discord.Client();
 const translate = new Translate({ translateId });
 
