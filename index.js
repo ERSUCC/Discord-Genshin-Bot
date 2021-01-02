@@ -19,12 +19,12 @@ connection.on("error", function()
     console.log("error connecting to database");
 });
 
-const clicksSchema = new mongoose.Schema({
+const pokesSchema = new mongoose.Schema({
     username: String,
-    clicks: Number
+    pokes: Number
 });
 
-const Clicks = mongoose.model("Clicks", clicksSchema);
+const Pokes = mongoose.model("Pokes", pokesSchema);
 
 client.on("message", message =>
 {
@@ -37,15 +37,15 @@ client.on("message", message =>
         message.channel.send("pong");
     }
 
-    else if (msgArgs[0] == "click")
+    else if (msgArgs[0] == "poke")
     {
-        Clicks.find({ username: message.author.username }, function(error, docs)
+        Pokes.find({ username: message.author.username }, function(error, docs)
         {
             console.log(error);
         });
     }
 
-    else if (msgArgs[0] == "clicks")
+    else if (msgArgs[0] == "pokes")
     {
 
     }
