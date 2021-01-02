@@ -1,9 +1,12 @@
 const prefix = "~";
 
 const discord = require("discord.js");
+const mongoose = require("mongoose");
 const https = require("https");
 
 const client = new discord.Client();
+
+mongoose.connect(process.env.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 client.on("message", message =>
 {
@@ -18,7 +21,7 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "whatis")
     {
-        var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + msgArgs.splice(1).join("%20") + "&format=json";
+        /*var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + msgArgs.splice(1).join("%20") + "&format=json";
 
         https.get(url, function(result)
         {
@@ -53,7 +56,12 @@ client.on("message", message =>
                     });
                 });
             });
-        });
+        });*/
+    }
+
+    else if (msgArgs[0] == "dbtest")
+    {
+        mongoose.set("test", "this is a test");
     }
 });
 
