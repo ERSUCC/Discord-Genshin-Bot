@@ -19,7 +19,7 @@ client.on("message", message =>
 
     else if (arguments[0] == "translate")
     {
-        var translation = await translate.translate(arguments.slice(1), "en");
+        var translation = translate.translate(arguments.slice(1), "en");
 
         message.channel.send("Translation: " + translation);
     }
