@@ -1,7 +1,7 @@
 const prefix = "~";
 
 const discord = require("discord.js");
-const http = require("http");
+const https = require("https");
 
 const client = new discord.Client();
 
@@ -18,12 +18,41 @@ client.on("message", message =>
 
     else if (arguments[0] == "whatis")
     {
-        var host = "https://en.wikipedia.org";
-        var path = "/w/api.php?action=opensearch&search={" + arguments.splice(1).join("%20") + "}&format=json";
+        var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + arguments.splice(1).join("%20") + "&format=json";
 
-        http.request({ host: host, path: path }, function(result)
+        https.get(url, function(result)
         {
-            console.log(result);
+            result.setEncoding("utf-8");
+
+            result.on("data", (data) => 
+            {
+                var results = JSON.parse(data)[1];
+
+                if (results.length == 0)
+                {
+                    message.channel.send("Could not find result for: " + arguments.splice(1).join(" "));
+
+                    return;
+                }
+
+                var searchTerm = results[0].split(" ").join("_");
+
+                var url2 = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exlimit=max&explaintext&titles=" + searchTerm;
+
+                https.get(url2, function(result)
+                {
+                    result.setEncoding("utf-8");
+
+                    result.on("data", (data) =>
+                    {
+                        var start = data.indexOf("extract\":\"") + 10;
+                        var end = data.indexOf("}", start) - 1;
+
+                        message.channel.send("Showing result for: " + results[0]);
+                        message.channel.send(data.substring(start, end));
+                    });
+                });
+            });
         });
     }
 });
