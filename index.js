@@ -7,6 +7,8 @@ const {Translate} = require("@google-cloud/translate").v2;
 const client = new discord.Client();
 const translate = new Translate({ projectId: translateId });
 
+console.log(translate);
+
 client.on("message", message =>
 {
     if (message.content.startsWith(prefix))
