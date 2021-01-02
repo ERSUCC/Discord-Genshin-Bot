@@ -1,42 +1,40 @@
+const prefix = "~";
+const translateId = process.env.translateId;
+
 const discord = require("discord.js");
 const {Translate} = require("@google-cloud/translate").v2;
 
 const client = new discord.Client();
-const translate = new Translate();
-
-const prefix = "~";
+const translate = new Translate({ translateId });
 
 client.on("message", message =>
 {
-    if (message.author.bot || !message.content.startsWith(prefix)) return;
-
-    var arguments = message.content.substring(1).split(" ").map(x => x.toLowerCase().trim());
-
-    if (arguments[0] == "ping")
+    if (message.content.startsWith(prefix))
     {
-        message.channel.send("pong");
+        var arguments = message.content.substring(1).split(" ").map(x => x.toLowerCase().trim());
+
+        if (arguments[0] == "ping")
+        {
+            message.channel.send("pong");
+        }
     }
 
-    else if (arguments[0] == "translate")
+    else if (!message.author.bot)
     {
-        var [language] = translate.detect(arguments.slice(1));
+        var [language] = translate.detect(message.content);
 
         language = Array.isArray(language) ? language : [language];
 
-        if (language[0].language == "en")
+        if (language[0].language != "en")
         {
-            message.channel.send("Text is already translated.");
-        }
-
-        else
-        {
-            console.log("we got this far!");
-
-            var [translation] = translate.translate(arguments.slice(1), "en");
+            var [translation] = translate.translate(message.content, "en");
 
             translation = Array.isArray(translation) ? translation : [translation];
 
-            message.channel.send("Translation: " + translation[0]);
+            if (translation[0] != message.content)
+            {
+                message.channel.send(message.author.username + " said: " + translation[0]);
+            }
         }
     }
 });
