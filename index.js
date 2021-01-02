@@ -23,7 +23,7 @@ client.on("message", message =>
 
     else if (!message.author.bot)
     {
-        var [language] = translate.detect(message.content);
+        var [language] = translate.detect("bonjour");
 
         language = Array.isArray(language) ? language : [language];
 
