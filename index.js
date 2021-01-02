@@ -19,9 +19,23 @@ client.on("message", message =>
 
     else if (arguments[0] == "translate")
     {
-        var translation = translate.translate(arguments.slice(1), "en");
+        var [language] = translate.detect(arguments.slice(1));
 
-        message.channel.send("Translation: " + translation);
+        language = Array.isArray(language) ? language : [language];
+
+        if (language[0].language == "en")
+        {
+            message.channel.send("Text is already translated.");
+        }
+
+        else
+        {
+            var [translation] = translate.translate(arguments.slice(1), "en");
+
+            translation = Array.isArray(translation) ? translation : [translation];
+
+            message.channel.send("Translation: " + translation[0]);
+        }
     }
 });
 
