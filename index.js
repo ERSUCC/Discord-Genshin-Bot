@@ -41,13 +41,38 @@ client.on("message", message =>
     {
         Pokes.find({ username: message.author.username }, function(error, docs)
         {
-            console.log(docs);
+            if (docs.length == 0)
+            {
+                var pokes = new Pokes({ username: message.author.username, pokes: 1 });
+
+                pokes.save();
+            }
+
+            else
+            {
+                var pokes = docs[0];
+
+                pokes.pokes++;
+
+                pokes.save();
+            }
         });
     }
 
     else if (msgArgs[0] == "pokes")
     {
+        Pokes.find({ username: message.author.username }, function(error, docs)
+        {
+            if (docs.length == 0)
+            {
+                message.channel.send(message.author.username + " has poked Genshin Bot 0 times.");
+            }
 
+            else
+            {
+                message.channel.send(message.author.username + " has poked Genshin Bot " + docs[0].pokes + " times.");
+            }
+        });
     }
 });
 
