@@ -1,5 +1,9 @@
 const discord = require("discord.js");
+const {Translate} = require("@google-cloud/translate").v2;
+
 const client = new discord.Client();
+const translate = new Translate();
+
 const prefix = "~";
 
 client.on("message", message =>
@@ -15,7 +19,9 @@ client.on("message", message =>
 
     else if (arguments[0] == "translate")
     {
-        
+        var translation = await translate.translate(arguments.slice(1), "en");
+
+        message.channel.send("Translation: " + translation);
     }
 });
 
