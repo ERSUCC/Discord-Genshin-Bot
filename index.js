@@ -8,6 +8,11 @@ const client = new discord.Client();
 
 mongoose.connect(process.env.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
+mongoose.connection.once("open", function()
+{
+    console.log("test");
+})
+
 client.on("message", message =>
 {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
