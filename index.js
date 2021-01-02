@@ -14,6 +14,11 @@ connection.once("open", function()
     console.log("connected to database");
 });
 
+connection.on("error", function()
+{
+    console.log("error connecting to database");
+});
+
 const clicksSchema = new mongoose.Schema({
     username: String,
     clicks: Number
