@@ -6,10 +6,7 @@ const {Translate} = require("@google-cloud/translate").v2;
 
 const client = new discord.Client();
 const path = require("path");
-console.log(path);
-const translate = new Translate({ projectId: translateId, keyFilename: path.resolve("./google-auth.json") });
-
-console.log(translate);
+const translate = new Translate({ projectId: translateId, keyFilename: path.resolve("google-auth.json") });
 
 client.on("message", message =>
 {
