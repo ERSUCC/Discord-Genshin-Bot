@@ -1,4 +1,5 @@
 const discord = require("discord.js");
+const config = require("./config.json");
 const client = new discord.Client();
 const prefix = "~";
 
@@ -19,4 +20,4 @@ client.on("message", message =>
     }
 });
 
-client.login("Nzk0NjU4ODc3OTUzNDA5MDY2.X--BwA.CZsrXe4yc-ICAcD5I8yamI7fhls");
+client.login(config.token);
