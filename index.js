@@ -85,7 +85,7 @@ function pigLatin(str)
 {
     if ("aeiou".includes(str[0]))
     {
-        
+        return str + "hay";
     }
 
     var i = 0;
