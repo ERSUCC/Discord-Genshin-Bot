@@ -75,7 +75,7 @@ client.on("message", message =>
         });
     }
 
-    else if (msgArgs[0] == "piglatin")
+    else if (msgArgs[0] == "pig")
     {
         message.channel.send(msgArgs.slice(1).map(x => pigLatin(x)).join(" "));
     }
@@ -85,7 +85,7 @@ function pigLatin(str)
 {
     if ("aeiou".includes(str[0]))
     {
-
+        
     }
 
     var i = 0;
