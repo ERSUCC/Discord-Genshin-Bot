@@ -77,7 +77,7 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "piglatin")
     {
-        message.channel.send(msgArgs.splice(1).map(x => pigLatin(x)).join(" "));
+        message.channel.send(msgArgs.slice(1).map(x => pigLatin(x)).join(" "));
     }
 });
 
