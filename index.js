@@ -90,7 +90,7 @@ function pigLatin(str)
 
     var i = 0;
 
-    while (!"aeiou".contains(str[i]))
+    while (!"aeiou".includes(str[i]))
     {
         i++;
     }
