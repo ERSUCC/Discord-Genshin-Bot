@@ -74,6 +74,28 @@ client.on("message", message =>
             }
         });
     }
+
+    else if (msgArgs[0] == "piglatin")
+    {
+        message.channel.send(msgArgs.splice(1).map(x => pigLatin(x)).join(" "));
+    }
 });
+
+function pigLatin(str)
+{
+    if ("aeiou".includes(str[0]))
+    {
+
+    }
+
+    var i = 0;
+
+    while (!"aeiou".contains(str[i]))
+    {
+        i++;
+    }
+
+    return str.substring(i) + str.substring(0, i) + "ay";
+}
 
 client.login(process.env.token);
