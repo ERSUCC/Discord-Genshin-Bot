@@ -137,7 +137,10 @@ client.on("message", message =>
                 poll.setDescription("1. " + qa + "\n2. " + qb)
                 poll.setColor("GREEN");
 
-                message.channel.send(poll);
+                message.channel.send(poll).then((msg) =>
+                {
+                    msg.react("1").react("2");
+                });
             });
         });
     }
