@@ -128,8 +128,8 @@ client.on("message", message =>
         
             result.on("end", () =>
             {
-                var qa = content.match("qa>(.+?)</div>")[1].toLowerCase().trim();
-                var qb = content.match("qb>(.+?)</div>")[1].toLowerCase().trim();
+                var qa = content.match("qa>(.+?)</div>")[1].trim().replace("?", "");
+                var qb = content.match("qb>(.+?)</div>")[1].trim().replace("?", "");
 
                 var poll = new discord.MessageEmbed();
 
@@ -139,7 +139,8 @@ client.on("message", message =>
 
                 message.channel.send(poll).then((msg) =>
                 {
-                    msg.react("1").react("2");
+                    msg.react("1");
+                    msg.react("2");
                 });
             });
         });
