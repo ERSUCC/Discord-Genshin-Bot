@@ -1,5 +1,6 @@
 const prefix = "~";
 
+const https = require("https");
 const mongoose = require("mongoose");
 
 mongoose.connect(process.env.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -107,6 +108,30 @@ client.on("message", message =>
             {
                 message.channel.send(msgArgs[1] + " has sent " + docs[0].messages + " messages since Jan 5, 2021.");
             }
+        });
+    }
+
+    else if (msgArgs[0] == "choice")
+    {
+        var url = "https://www.conversationstarters.com/wyrq.php";
+
+        https.get(url, result =>
+        {
+            result.setEncoding("utf-8");
+
+            result.on("data", data =>
+            {
+                var qa = data.match("qa\">(.+?)</div>")[1].toLowerCase().trim();
+                var qb = data.match("qb\">(.+?)</div>")[1].toLowerCase().trim();
+
+                var poll = new discord.MessageEmbed();
+
+                poll.setTitle("Would you rather:")
+                poll.setDescription("1. " + qa + "\n2. " + qb)
+                poll.setColor("GREEN");
+
+                message.channel.send(poll);
+            });
         });
     }
 });
