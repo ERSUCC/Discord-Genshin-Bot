@@ -1,23 +1,8 @@
 const prefix = "~";
 
-const discord = require("discord.js");
-const client = new discord.Client();
-
 const mongoose = require("mongoose");
 
 mongoose.connect(process.env.mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const connection = mongoose.connection;
-
-connection.once("open", function()
-{
-    console.log("connected to database");
-});
-
-connection.on("error", function()
-{
-    console.log("error connecting to database");
-});
 
 const pokesSchema = new mongoose.Schema({
     username: String,
@@ -25,6 +10,16 @@ const pokesSchema = new mongoose.Schema({
 });
 
 const Pokes = mongoose.model("Pokes", pokesSchema);
+
+const statsSchema = new mongoose.Schema({
+    username: String,
+    messages: Number
+});
+
+const Stats = mongoose.model("Stats", statsSchema);
+
+const discord = require("discord.js");
+const client = new discord.Client();
 
 client.on("message", message =>
 {
@@ -75,9 +70,33 @@ client.on("message", message =>
         });
     }
 
-    else if (msgArgs[0] == "pig")
+    else if (msgArgs[0] == "pig" && msgArgs.length > 1)
     {
         message.channel.send(msgArgs.slice(1).map(x => pigLatin(x)).join(" "));
+    }
+
+    else if (msgArgs[0] == "stats" && msgArgs.length > 1)
+    {
+        console.log(msgArgs[1]);
+
+        /*Stats.find({ username: msgArgs[1] }, function(error, docs)
+        {
+            if (docs.length == 0)
+            {
+                var stats = new Stats({ username: message.author.username, pokes: 1 });
+
+                stats.save();
+            }
+
+            else
+            {
+                var stats = docs[0];
+
+                stats.pokes++;
+
+                stats.save();
+            }
+        });*/
     }
 });
 
