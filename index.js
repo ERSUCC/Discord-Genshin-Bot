@@ -139,8 +139,8 @@ client.on("message", message =>
 
                 message.channel.send(poll).then((msg) =>
                 {
-                    msg.react("1");
-                    msg.react("2");
+                    msg.react("1").catch((reason) => console.log(reason));
+                    msg.react("2").catch((reason) => console.log(reason));
                 });
             });
         });
