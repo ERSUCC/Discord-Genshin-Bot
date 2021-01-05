@@ -23,13 +23,11 @@ const client = new discord.Client();
 
 client.on("message", message =>
 {
-    console.log(message.author);
-
-    /*Stats.find({ username: message.author }, function(error, docs)
+    Stats.find({ username: message.author.id }, function(error, docs)
     {
         if (docs.length == 0)
         {
-            var stats = new Stats({ username: message.author, messages: 1 });
+            var stats = new Stats({ username: message.author.id, messages: 1 });
 
             stats.save();
         }
@@ -42,7 +40,7 @@ client.on("message", message =>
 
             stats.save();
         }
-    });*/
+    });
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -98,16 +96,16 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "stats" && msgArgs.length > 1)
     {
-        Stats.find({ username: msgArgs[1] }, function(error, docs)
+        Stats.find({ username: msgArgs[1].substring(3, msgArgs[1].length - 1) }, function(error, docs)
         {
             if (docs.length == 0)
             {
-                message.channel.send(msgArgs[1] + " has sent 0 messages.");
+                message.channel.send(msgArgs[1] + " has sent 0 messages since Jan 5, 2021.");
             }
 
             else
             {
-                message.channel.send(msgArgs[1] + " has sent " + docs[0].messages + " messages.");
+                message.channel.send(msgArgs[1] + " has sent " + docs[0].messages + " messages since Jan 5, 2021.");
             }
         });
     }
