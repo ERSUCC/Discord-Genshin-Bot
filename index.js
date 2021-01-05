@@ -23,6 +23,27 @@ const client = new discord.Client();
 
 client.on("message", message =>
 {
+    console.log(message.author);
+
+    /*Stats.find({ username: message.author }, function(error, docs)
+    {
+        if (docs.length == 0)
+        {
+            var stats = new Stats({ username: message.author, messages: 1 });
+
+            stats.save();
+        }
+
+        else
+        {
+            var stats = docs[0];
+
+            stats.messages++;
+
+            stats.save();
+        }
+    });*/
+
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     var msgArgs = message.content.substring(1).split(" ").map(x => x.toLowerCase().trim());
@@ -77,26 +98,18 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "stats" && msgArgs.length > 1)
     {
-        console.log(msgArgs[1]);
-
-        /*Stats.find({ username: msgArgs[1] }, function(error, docs)
+        Stats.find({ username: msgArgs[1] }, function(error, docs)
         {
             if (docs.length == 0)
             {
-                var stats = new Stats({ username: message.author.username, pokes: 1 });
-
-                stats.save();
+                message.channel.send(msgArgs[1] + " has sent 0 messages.");
             }
 
             else
             {
-                var stats = docs[0];
-
-                stats.pokes++;
-
-                stats.save();
+                message.channel.send(msgArgs[1] + " has sent " + docs[0].messages + " messages.");
             }
-        });*/
+        });
     }
 });
 
