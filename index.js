@@ -22,6 +22,13 @@ const Stats = mongoose.model("Stats", statsSchema);
 const discord = require("discord.js");
 const client = new discord.Client();
 
+const choiceSchema = new mongoose.Schema({
+    one: String,
+    two: String
+});
+
+const Choice = mongoose.model("Choice", choiceSchema);
+
 client.on("message", message =>
 {
     Stats.find({ username: message.author.id }, function(error, docs)
@@ -54,7 +61,7 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "poke")
     {
-        Pokes.find({ username: message.author.username }, function(error, docs)
+        Pokes.find({ username: message.author.username }, (error, docs) =>
         {
             if (docs.length == 0)
             {
@@ -113,34 +120,90 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "choice")
     {
-        var url = "https://www.conversationstarters.com/wyrq.php";
+        var random = Math.random() < 0.5;
+        var qa = "";
+        var qb = "";
+        var choices = [];
 
-        https.get(url, result =>
+        Choice.find({}, (error, docs) =>
         {
-            var content = "";
-        
-            result.setEncoding("utf-8");
-        
-            result.on("data", data =>
+            choices = docs;
+        });
+
+        if (random && choices.length > 0)
+        {
+            var choice = choices[Math.round(Math.random() * (choices.Length - 1))];
+
+            qa = choice.one;
+            qb = choice.two;
+        }
+
+        else
+        {
+            var url = "https://www.conversationstarters.com/wyrq.php";
+
+            https.get(url, result =>
             {
-                content += data;
-            });
-        
-            result.on("end", () =>
-            {
-                var qa = content.match("qa>(.+?)</div>")[1].trim().replace("?", "");
-                var qb = content.match("qb>(.+?)</div>")[1].trim().replace("?", "");
-
-                var poll = new discord.MessageEmbed();
-
-                poll.setTitle("Would you rather:")
-                poll.setDescription("1. " + qa + "\n2. " + qb)
-                poll.setColor("GREEN");
-
-                message.channel.send(poll).then((msg) =>
+                var content = "";
+            
+                result.setEncoding("utf-8");
+            
+                result.on("data", data =>
                 {
-                    msg.react("1️⃣").then(() => msg.react("2️⃣")).catch((reason) => console.log(reason));
+                    content += data;
                 });
+            
+                result.on("end", () =>
+                {
+                    qa = content.match("qa>(.+?)</div>")[1].trim().replace("?", "");
+                    qb = content.match("qb>(.+?)</div>")[1].trim().replace("?", "");
+                });
+            });
+        }
+
+        var poll = new discord.MessageEmbed();
+
+        poll.setTitle("Would you rather:")
+        poll.setDescription("1. " + qa + "\n2. " + qb)
+        poll.setColor("GREEN");
+
+        message.channel.send(poll).then((msg) =>
+        {
+            msg.react("1️⃣").then(() => msg.react("2️⃣")).catch((reason) => console.log(reason));
+        });
+    }
+
+    else if (msgArgs[0] == "addchoice")
+    {
+        var choice = new Choice({ one: "", two: "" });
+
+        message.author.send("Enter option 1:").then(() =>
+        {
+            message.author.awaitMessages(m => true, { max: 1, time: 30000}).then(collected =>
+            {
+                var one = collected.first().content.toLowerCase();
+
+                choice.one = one[0].toUpperCase() + one.substring(1);
+
+                message.author.send("Enter option 2:").then(() =>
+                {
+                    message.author.awaitMessages(m2 => true, { max: 1, time: 30000}).then(collected2 =>
+                    {
+                        var two = collected2.first().content.toLowerCase();
+
+                        choice.two = two[0].toUpperCase() + two.substring(1);
+
+                        choice.save();
+
+                        message.author.send("Choices saved.");
+                    });
+                }).catch(() =>
+                {
+                    message.author.send("Message timed out. Send ~choice to restart.");
+                });
+            }).catch(() => 
+            {
+                message.author.send("Message timed out. Send ~choice to restart.");
             });
         });
     }
