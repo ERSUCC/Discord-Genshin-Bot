@@ -117,12 +117,19 @@ client.on("message", message =>
 
         https.get(url, result =>
         {
+            var content = "";
+        
             result.setEncoding("utf-8");
-
+        
             result.on("data", data =>
             {
-                var qa = data.match("qa\">(.+?)</div>")[1].toLowerCase().trim();
-                var qb = data.match("qb\">(.+?)</div>")[1].toLowerCase().trim();
+                content += data;
+            });
+        
+            result.on("end", () =>
+            {
+                var qa = content.match("qa>(.+?)</div>")[1].toLowerCase().trim();
+                var qb = content.match("qb>(.+?)</div>")[1].toLowerCase().trim();
 
                 var poll = new discord.MessageEmbed();
 
