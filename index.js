@@ -233,8 +233,8 @@ function startPoll(qa, qb, message)
 
             collected.forEach(reaction =>
             {
-                console.log(reaction);
-                
+                console.log(reaction.emoji.name);
+
                 if (reaction.emoji.name == "1️⃣")
                 {
                     ones++;
