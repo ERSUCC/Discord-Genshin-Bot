@@ -228,20 +228,19 @@ function startPoll(qa, qb, message)
 
         setTimeout(() =>
         {
-            var reactions = msg.reactions.cache;
             var ones = 0;
             var twos = 0;
 
-            for (var reaction of reactions)
+            for (var reaction of msg.reactions.cache)
             {
-                console.log(reaction._emoji);
+                const { m, emoji } = reaction;
 
-                if (reaction._emoji.name == "1️⃣")
+                if (emoji.name == "1️⃣")
                 {
                     ones++;
                 }
 
-                else if (reaction._emoji.name == "2️⃣")
+                else if (emoji.name == "2️⃣")
                 {
                     twos++;
                 }
