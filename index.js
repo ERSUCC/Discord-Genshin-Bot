@@ -228,8 +228,43 @@ function startPoll(qa, qb, message)
 
         setTimeout(() =>
         {
-            msg.reply("Test");
-        }, 5000);
+            var reactions = msg.reactions.cache;
+            var ones = 0;
+            var twos = 0;
+
+            for (var reaction of reactions)
+            {
+                if (reaction.emoji == "1️⃣")
+                {
+                    ones++;
+                }
+
+                else if (reaction.emoji == "2️⃣")
+                {
+                    twos++;
+                }
+            }
+
+            var winChoice = "";
+
+            if (ones > twos)
+            {
+                winChoice = msg.content.split("\n")[0];
+            }
+
+            else if (twos > ones)
+            {
+                winChoice = msg.content.split("\n")[1];
+            }
+
+            else
+            {
+                winChoice = "It's a tie!";
+            }
+
+            msg.channel.send("Poll results - the winner is: " + winChoice);
+            msg.delete();
+        }, 30000);
     });
 }
 
