@@ -225,6 +225,11 @@ function startPoll(qa, qb, message)
     message.channel.send(poll).then((msg) =>
     {
         msg.react("1️⃣").then(() => msg.react("2️⃣")).catch((reason) => console.log(reason));
+
+        setTimeout(() =>
+        {
+            msg.reply("Test");
+        }, 5000);
     });
 }
 
