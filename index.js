@@ -177,34 +177,32 @@ client.on("message", message =>
     {
         var choice = new Choice({ one: "", two: "" });
 
-        message.author.send("Enter option 1:").then(() =>
+        var msg = message.author.send("Enter option 1:");
+
+        msg.channel.awaitMessages(m => true, { max: 1, time: 30000 }).then(collected =>
         {
-            message.author.awaitMessages(m => true, { max: 1, time: 30000}).then(collected =>
+            var one = collected.first().content.toLowerCase();
+
+            choice.one = one[0].toUpperCase() + one.substring(1);
+
+            var msg2 = message.author.send("Enter option 2:");
+
+            msg2.channel.awaitMessages(m2 => true, { max: 1, time: 30000}).then(collected2 =>
             {
-                var one = collected.first().content.toLowerCase();
+                var two = collected2.first().content.toLowerCase();
 
-                choice.one = one[0].toUpperCase() + one.substring(1);
+                choice.two = two[0].toUpperCase() + two.substring(1);
 
-                message.author.send("Enter option 2:").then(() =>
-                {
-                    message.author.awaitMessages(m2 => true, { max: 1, time: 30000}).then(collected2 =>
-                    {
-                        var two = collected2.first().content.toLowerCase();
+                choice.save();
 
-                        choice.two = two[0].toUpperCase() + two.substring(1);
-
-                        choice.save();
-
-                        message.author.send("Choices saved.");
-                    });
-                }).catch(() =>
-                {
-                    message.author.send("Message timed out. Send ~choice to restart.");
-                });
-            }).catch(() => 
+                message.author.send("Choices saved.");
+            }).catch(() =>
             {
                 message.author.send("Message timed out. Send ~choice to restart.");
             });
+        }).catch(() => 
+        {
+            message.author.send("Message timed out. Send ~choice to restart.");
         });
     }
 });
