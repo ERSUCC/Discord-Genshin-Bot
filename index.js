@@ -126,8 +126,8 @@ client.on("message", message =>
 
             if (random && docs.length > 0)
             {
-                console.log(docs);
-                
+                console.log(Math.floor(Math.random() * docs.Length));
+
                 var choice = docs[Math.floor(Math.random() * docs.Length)];
 
                 var qa = choice.one;
