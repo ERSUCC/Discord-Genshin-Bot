@@ -228,8 +228,6 @@ function startPoll(qa, qb, message)
 
         msg.awaitReactions(m => true, { time: 30000 }).then(collected =>
         {
-            console.log(collected);
-
             var ones = 0;
             var twos = 0;
 
@@ -244,7 +242,7 @@ function startPoll(qa, qb, message)
                 {
                     twos++;
                 }
-            }
+            });
 
             var winChoice = "";
 
