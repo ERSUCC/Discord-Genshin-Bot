@@ -186,12 +186,12 @@ client.on("message", message =>
                         message.author.send("Choices saved.");
                     }).catch(() =>
                     {
-                        message.author.send("Message timed out. Send ~choice to restart.");
+                        message.author.send("Message timed out. Send ~addchoice to restart.");
                     });
                 });
             }).catch(() => 
             {
-                message.author.send("Message timed out. Send ~choice to restart.");
+                message.author.send("Message timed out. Send ~addchoice to restart.");
             });
         });
     }
