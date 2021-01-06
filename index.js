@@ -120,16 +120,13 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "choice")
     {
-        var random = Math.random() < 0.5;
-        var choices = [];
-
         Choice.find({}, (error, docs) =>
         {
-            choices = docs;
+            var random = Math.random() < 0.5;
 
-            if (random && choices.length > 0)
+            if (random && docs.length > 0)
             {
-                var choice = choices[Math.round(Math.random() * (choices.Length - 1))];
+                var choice = docs[Math.round(Math.random() * (docs.Length - 1))];
 
                 var qa = choice.one;
                 var qb = choice.two;
