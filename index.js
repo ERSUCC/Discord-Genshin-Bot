@@ -177,7 +177,7 @@ client.on("message", message =>
     {
         var choice = new Choice({ one: "", two: "" });
 
-        var msg = message.author.send("Enter option 1:");
+        var msg = await message.author.send("Enter option 1:");
 
         msg.channel.awaitMessages(m => true, { max: 1, time: 30000 }).then(collected =>
         {
@@ -185,7 +185,7 @@ client.on("message", message =>
 
             choice.one = one[0].toUpperCase() + one.substring(1);
 
-            var msg2 = message.author.send("Enter option 2:");
+            var msg2 = await message.author.send("Enter option 2:");
 
             msg2.channel.awaitMessages(m2 => true, { max: 1, time: 30000}).then(collected2 =>
             {
