@@ -120,15 +120,11 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "choice")
     {
-        var random = Math.random() < 0.5;
-        var qa = "";
-        var qb = "";
+        var random = Math.random() < 0.25;
         var choices = [];
 
         Choice.find({}, (error, docs) =>
         {
-            console.log(random);
-
             choices = docs;
         });
 
@@ -136,8 +132,10 @@ client.on("message", message =>
         {
             var choice = choices[Math.round(Math.random() * (choices.Length - 1))];
 
-            qa = choice.one;
-            qb = choice.two;
+            var qa = choice.one;
+            var qb = choice.two;
+
+            startPoll(qa, qb, message);
         }
 
         else
@@ -157,22 +155,13 @@ client.on("message", message =>
             
                 result.on("end", () =>
                 {
-                    qa = content.match("qa>(.+?)</div>")[1].trim().replace("?", "");
-                    qb = content.match("qb>(.+?)</div>")[1].trim().replace("?", "");
+                    var qa = content.match("qa>(.+?)</div>")[1].trim().replace("?", "");
+                    var qb = content.match("qb>(.+?)</div>")[1].trim().replace("?", "");
+
+                    startPoll(qa, qb, message);
                 });
             });
         }
-
-        var poll = new discord.MessageEmbed();
-
-        poll.setTitle("Would you rather:")
-        poll.setDescription("1. " + qa + "\n2. " + qb)
-        poll.setColor("GREEN");
-
-        message.channel.send(poll).then((msg) =>
-        {
-            msg.react("1️⃣").then(() => msg.react("2️⃣")).catch((reason) => console.log(reason));
-        });
     }
 
     else if (msgArgs[0] == "addchoice")
@@ -226,6 +215,20 @@ function pigLatin(str)
     }
 
     return str.substring(i) + str.substring(0, i) + "ay";
+}
+
+function startPoll(qa, qb, message)
+{
+    var poll = new discord.MessageEmbed();
+
+    poll.setTitle("Would you rather:")
+    poll.setDescription("1. " + qa + "\n2. " + qb)
+    poll.setColor("GREEN");
+
+    message.channel.send(poll).then((msg) =>
+    {
+        msg.react("1️⃣").then(() => msg.react("2️⃣")).catch((reason) => console.log(reason));
+    });
 }
 
 client.login(process.env.token);
