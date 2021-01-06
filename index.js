@@ -229,11 +229,11 @@ function startPoll(qa, qb, message)
         msg.awaitReactions(m => true, { time: 30000 }).then(collected =>
         {
             console.log(collected);
-            
+
             var ones = 0;
             var twos = 0;
 
-            for (var reaction of collected)
+            collected.forEach(reaction =>
             {
                 if (reaction.emoji.name == "1️⃣")
                 {
