@@ -233,8 +233,6 @@ function startPoll(qa, qb, message)
 
             collected.forEach(reaction =>
             {
-                console.log(reaction.emoji.identifier);
-
                 if (reaction.emoji.identifier == "1%EF%B8%8F%E2%83%A3")
                 {
                     ones++;
