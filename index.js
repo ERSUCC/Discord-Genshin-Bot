@@ -226,21 +226,19 @@ function startPoll(qa, qb, message)
     {
         msg.react("1️⃣").then(() => msg.react("2️⃣")).catch((reason) => console.log(reason));
 
-        setTimeout(() =>
+        msg.awaitReactions(m => true, { time: 30000 }).then(collected =>
         {
             var ones = 0;
             var twos = 0;
 
-            for (var reaction of msg.reactions.cache)
+            for (var reaction of collected)
             {
-                const { m, emoji } = reaction;
-
-                if (emoji.name == "1️⃣")
+                if (reaction.emoji.name == "1️⃣")
                 {
                     ones++;
                 }
 
-                else if (emoji.name == "2️⃣")
+                else if (reaction.emoji.name == "2️⃣")
                 {
                     twos++;
                 }
@@ -265,7 +263,7 @@ function startPoll(qa, qb, message)
 
             msg.channel.send("The winner is: " + winChoice);
             msg.delete();
-        }, 5000);
+        });
     });
 }
 
