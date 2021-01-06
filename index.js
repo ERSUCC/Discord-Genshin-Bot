@@ -128,10 +128,12 @@ client.on("message", message =>
             choices = docs;
         });
 
-        console.log(random);
+        console.log(choices);
 
         if (random && choices.length > 0)
         {
+            console.log(test);
+            
             var choice = choices[Math.round(Math.random() * (choices.Length - 1))];
 
             var qa = choice.one;
