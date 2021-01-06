@@ -233,14 +233,14 @@ function startPoll(qa, qb, message)
 
             collected.forEach(reaction =>
             {
-                console.log(reaction.emoji.name);
-
-                if (reaction.emoji.name == ":one:")
+                console.log(reaction.emoji.id);
+                
+                if (reaction.emoji.id == ":one:")
                 {
                     ones++;
                 }
 
-                else if (reaction.emoji.name == ":two:")
+                else if (reaction.emoji.id == ":two:")
                 {
                     twos++;
                 }
