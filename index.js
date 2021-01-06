@@ -234,6 +234,8 @@ function startPoll(qa, qb, message)
 
             for (var reaction of reactions)
             {
+                console.log(reaction.emoji);
+                
                 if (reaction.emoji == "1️⃣")
                 {
                     ones++;
@@ -262,7 +264,7 @@ function startPoll(qa, qb, message)
                 winChoice = "It's a tie!";
             }
 
-            msg.channel.send("Poll results - the winner is: " + winChoice);
+            msg.channel.send("The winner is: " + winChoice);
             msg.delete();
         }, 30000);
     });
