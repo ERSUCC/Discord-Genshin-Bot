@@ -120,13 +120,15 @@ client.on("message", message =>
 
     else if (msgArgs[0] == "choice")
     {
-        var random = Math.random() < 0.25;
+        var random = Math.random() < 0.5;
         var choices = [];
 
         Choice.find({}, (error, docs) =>
         {
             choices = docs;
         });
+
+        console.log(random);
 
         if (random && choices.length > 0)
         {
