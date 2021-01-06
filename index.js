@@ -127,8 +127,8 @@ client.on("message", message =>
 
         Choice.find({}, (error, docs) =>
         {
-            console.log(docs);
-            
+            console.log(random);
+
             choices = docs;
         });
 
