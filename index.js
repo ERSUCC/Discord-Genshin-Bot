@@ -126,46 +126,42 @@ client.on("message", message =>
         Choice.find({}, (error, docs) =>
         {
             choices = docs;
-        });
 
-        console.log(choices);
-
-        if (random && choices.length > 0)
-        {
-            console.log(test);
-            
-            var choice = choices[Math.round(Math.random() * (choices.Length - 1))];
-
-            var qa = choice.one;
-            var qb = choice.two;
-
-            startPoll(qa, qb, message);
-        }
-
-        else
-        {
-            var url = "https://www.conversationstarters.com/wyrq.php";
-
-            https.get(url, result =>
+            if (random && choices.length > 0)
             {
-                var content = "";
-            
-                result.setEncoding("utf-8");
-            
-                result.on("data", data =>
-                {
-                    content += data;
-                });
-            
-                result.on("end", () =>
-                {
-                    var qa = content.match("qa>(.+?)</div>")[1].trim().replace("?", "");
-                    var qb = content.match("qb>(.+?)</div>")[1].trim().replace("?", "");
+                var choice = choices[Math.round(Math.random() * (choices.Length - 1))];
 
-                    startPoll(qa, qb, message);
+                var qa = choice.one;
+                var qb = choice.two;
+
+                startPoll(qa, qb, message);
+            }
+
+            else
+            {
+                var url = "https://www.conversationstarters.com/wyrq.php";
+
+                https.get(url, result =>
+                {
+                    var content = "";
+                
+                    result.setEncoding("utf-8");
+                
+                    result.on("data", data =>
+                    {
+                        content += data;
+                    });
+                
+                    result.on("end", () =>
+                    {
+                        var qa = content.match("qa>(.+?)</div>")[1].trim().replace("?", "");
+                        var qb = content.match("qb>(.+?)</div>")[1].trim().replace("?", "");
+
+                        startPoll(qa, qb, message);
+                    });
                 });
-            });
-        }
+            }
+        });
     }
 
     else if (msgArgs[0] == "addchoice")
