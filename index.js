@@ -234,14 +234,14 @@ function startPoll(qa, qb, message)
 
             for (var reaction of reactions)
             {
-                console.log(reactions);
+                console.log(reaction);
 
-                if (reaction.emoji == "1️⃣")
+                if (reaction == "1️⃣")
                 {
                     ones++;
                 }
 
-                else if (reaction.emoji == "2️⃣")
+                else if (reaction == "2️⃣")
                 {
                     twos++;
                 }
