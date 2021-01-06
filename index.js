@@ -234,8 +234,8 @@ function startPoll(qa, qb, message)
 
             for (var reaction of reactions)
             {
-                console.log(reaction.emoji);
-                
+                console.log(reactions);
+
                 if (reaction.emoji == "1️⃣")
                 {
                     ones++;
@@ -266,7 +266,7 @@ function startPoll(qa, qb, message)
 
             msg.channel.send("The winner is: " + winChoice);
             msg.delete();
-        }, 30000);
+        }, 5000);
     });
 }
 
