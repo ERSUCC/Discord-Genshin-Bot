@@ -235,12 +235,12 @@ function startPoll(qa, qb, message)
             {
                 console.log(reaction.emoji.identifier);
 
-                if (reaction.emoji.id == ":one:")
+                if (reaction.emoji.identifier == "1%EF%B8%8F%E2%83%A3")
                 {
                     ones++;
                 }
 
-                else if (reaction.emoji.id == ":two:")
+                else if (reaction.emoji.identifier == "2%EF%B8%8F%E2%83%A3")
                 {
                     twos++;
                 }
