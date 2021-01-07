@@ -233,12 +233,12 @@ function startPoll(qa, qb, message)
 
             collected.forEach(reaction =>
             {
-                if (reaction.emoji.identifier == "1%EF%B8%8F%E2%83%A3")
+                if (reaction.emoji.name == "one")
                 {
                     ones++;
                 }
 
-                else if (reaction.emoji.identifier == "2%EF%B8%8F%E2%83%A3")
+                else if (reaction.emoji.identifier == "two")
                 {
                     twos++;
                 }
