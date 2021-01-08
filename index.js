@@ -226,12 +226,12 @@ function startPoll(qa, qb, message)
     {
         msg.react("1️⃣").then(() => msg.react("2️⃣")).catch((reason) => console.log(reason));
 
-        msg.awaitReactions(m => true, { time: 30000 }).then(collected =>
+        msg.awaitReactions(m => true, { max: Number.MAX_SAFE_INTEGER, time: 30000 }).then(collected =>
         {
             var ones = 0;
             var twos = 0;
 
-            console.log(collected.length);
+            console.log(collected);
 
             collected.forEach(reaction =>
             {
