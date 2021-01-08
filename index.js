@@ -230,8 +230,8 @@ function startPoll(qa, qb, message)
         {
             var cache = collected.first().message.reactions.cache;
 
-            var ones = cache.get("1️⃣");
-            var twos = cache.get("2️⃣");
+            var ones = cache.get("1️⃣").count;
+            var twos = cache.get("2️⃣").count;
 
             console.log(ones);
 
