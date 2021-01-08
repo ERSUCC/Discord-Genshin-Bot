@@ -228,23 +228,10 @@ function startPoll(qa, qb, message)
 
         msg.awaitReactions(m => true, { max: Number.MAX_SAFE_INTEGER, time: 5000 }).then(collected =>
         {
-            var ones = 0;
-            var twos = 0;
+            var cache = collected.first().message.reactions.cache;
 
-            collected.forEach(reaction =>
-            {
-                console.log(reaction.message.reactions.cache.get("1️⃣"));
-
-                if (reaction.emoji.name == "one")
-                {
-                    ones++;
-                }
-
-                else if (reaction.emoji.identifier == "two")
-                {
-                    twos++;
-                }
-            });
+            var ones = cache.get("1️⃣");
+            var twos = cache.get("2️⃣");
 
             var winChoice = "";
 
