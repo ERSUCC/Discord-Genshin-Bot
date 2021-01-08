@@ -241,7 +241,7 @@ function startPoll(qa, qb, message)
 
             else if (twos > ones)
             {
-                msg.channel.send("The winner is: " + msg.embeds[0].description.split("\n")[0]);
+                msg.channel.send("The winner is: " + msg.embeds[0].description.split("\n")[1]);
                 msg.delete();
             }
 
