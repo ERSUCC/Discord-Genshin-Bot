@@ -233,28 +233,23 @@ function startPoll(qa, qb, message)
             var ones = cache.get("1️⃣").count;
             var twos = cache.get("2️⃣").count;
 
-            console.log(ones);
-            console.log(twos);
-
-            var winChoice = "";
-
             if (ones > twos)
             {
-                winChoice = msg.content.split("\n")[0];
+                msg.channel.send("The winner is: " + msg.content.split("\n")[0]);
+                msg.delete();
             }
 
             else if (twos > ones)
             {
-                winChoice = msg.content.split("\n")[1];
+                msg.channel.send("The winner is: " + msg.content.split("\n")[0]);
+                msg.delete();
             }
 
             else
             {
-                winChoice = "It's a tie!";
+                msg.channel.send("It's a tie!");
+                msg.delete();
             }
-
-            msg.channel.send("The winner is: " + winChoice);
-            msg.delete();
         }).catch(reason =>
         {
             console.log(reason);
