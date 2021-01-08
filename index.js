@@ -234,6 +234,7 @@ function startPoll(qa, qb, message)
             var twos = cache.get("2️⃣").count;
 
             console.log(ones);
+            console.log(twos);
 
             var winChoice = "";
 
