@@ -233,6 +233,8 @@ function startPoll(qa, qb, message)
             var ones = cache.get("1️⃣").count;
             var twos = cache.get("2️⃣").count;
 
+            console.log(msg);
+
             if (ones > twos)
             {
                 msg.channel.send("The winner is: " + msg.content.split("\n")[0]);
