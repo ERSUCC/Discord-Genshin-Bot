@@ -231,6 +231,8 @@ function startPoll(qa, qb, message)
             var ones = 0;
             var twos = 0;
 
+            console.log(collected.length);
+
             collected.forEach(reaction =>
             {
                 if (reaction.emoji.name == "one")
